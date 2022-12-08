@@ -1,10 +1,11 @@
-# ShipBattle Game
+# Cat Generator App
 
-> The game created by Bekjon Ishpulatov
+> The app created by Bekjon Ishpulatov
 
 ## Built With
 
 - ReactJS(only class components)
+- Tailwind css
 
 ## Live Demo
 
