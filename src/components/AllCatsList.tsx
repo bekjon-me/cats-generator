@@ -20,7 +20,7 @@ export default class AllCatsList extends Component<IProps> {
     const { color } = this.props.cat;
     return (
       <div
-        className={`w-80 p-6 border-white rounded-md border-2 bg-[${color}] flex justify-around`}
+        className={`w-80 p-6 border-white rounded-md border-2 bg-[${color}] flex gap-4`}
         style={{ backgroundColor: color }}
       >
         <img
