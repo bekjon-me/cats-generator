@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./assets/main.css";
+import "./class/assets/main.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import CatsProvider from "./context/catsContext";
+import CatsProvider from "./class/context/catsContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

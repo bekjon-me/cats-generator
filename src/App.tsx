@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import AllCatsList from "./components/AllCatsList";
-import NeighborsCatsList from "./components/NeighborsCatsList";
-import { CatsContext } from "./context/catsContext";
+import AllCatsList from "./class/components/AllCatsList";
+import NeighborsCatsList from "./class/components/NeighborsCatsList";
+import { CatsContext } from "./class/context/catsContext";
 
 export default class App extends Component {
   context!: React.ContextType<typeof CatsContext>;

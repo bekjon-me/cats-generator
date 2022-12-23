@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { CatsContext } from "../context/catsContext";
-import catRandomImage from "../utils/catRandomImage";
 
 interface IProps {
   cat: {
@@ -25,7 +24,7 @@ export default class AllCatsList extends Component<IProps> {
       >
         <img
           src={this.props.cat.image}
-          alt="Cat's image"
+          alt="Cat's_image"
           className="w-[128px] h-100 rounded-full"
         />
         <div className="flex flex-col">
