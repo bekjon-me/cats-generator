@@ -3,17 +3,17 @@ import ReactDOM from "react-dom/client";
 import "./class/assets/main.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import CatsProvider from "./class/context/catsContext";
+import CatsProvider from "./function/context/catsContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <CatsProvider>
-      <App />
-    </CatsProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <CatsProvider>
+    <App />
+  </CatsProvider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
