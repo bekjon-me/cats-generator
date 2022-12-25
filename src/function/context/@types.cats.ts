@@ -8,7 +8,6 @@ export interface Cat {
     feedTime: number;
   }
   
-  export type CatsContextType = {
-    cats: Cat[];
+  export interface CatsContextType extends Cat {
     feedCat?: (id: string) => void;
   }

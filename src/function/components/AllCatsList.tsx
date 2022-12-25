@@ -16,7 +16,7 @@ interface IProps {
 
 export default function AllCatsList(props: IProps) {
   const { color } = props.cat;
-  const { feedCat } = React.useContext(CatsContext) as CatsContextType;
+  const { feedCat } = React.useContext(CatsContext);
   return (
     <div
       className={`w-80 p-6 border-white rounded-md border-2 bg-[${color}] flex gap-4`}

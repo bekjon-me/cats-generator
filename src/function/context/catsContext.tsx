@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import uuid from "react-uuid";
 import catRandom from "../utils/catRandom";
 import catRandomImage from "../utils/catRandomImage";
@@ -27,61 +27,56 @@ const initialState: CatsContextType = {
 
 export const CatsContext = React.createContext<CatsContextType>(initialState);
 
-export default class CatsProvider extends React.Component<
-  any,
-  CatsContextType
-> {
-  interval: () => NodeJS.Timer;
-  feedInterval: () => NodeJS.Timer;
-  constructor(props: any) {
-    super(props);
-    this.state = initialState;
+export default function CatsProvider(props: any) {
+  const [cats, setCats] = React.useState<Cat[]>(initialState.cats);
 
-    this.interval = () =>
-      setInterval(() => {
-        this.setState({
-          cats: [
-            ...this.state.cats,
-            {
-              id: uuid(),
-              name: catRandom(),
-              color: colorRandom(),
-              age: 0,
-              hasCollar: hasCollar(),
-              image: catRandomImage(),
-              feedTime: 35,
-            },
-          ],
-        });
-      }, 5000);
+  console.log(cats);
 
-    this.feedInterval = () =>
-      setInterval(() => {
-        const cats = this.state.cats.filter((cat) => cat.feedTime > 0);
-        this.setState({
-          cats: cats.map((cat) => {
+  console.log("render");
+
+  const interval = () =>
+    setInterval(() => {
+      setCats((prevCats) => [
+        ...prevCats,
+        {
+          id: uuid(),
+          name: catRandom(),
+          color: colorRandom(),
+          age: 0,
+          hasCollar: hasCollar(),
+          image: catRandomImage(),
+          feedTime: 35,
+        },
+      ]);
+    }, 5000);
+
+  const feedInterval = () =>
+    setInterval(() => {
+      setCats((prevCats) => {
+        return prevCats.map((cat) => {
+          if (cat.feedTime > 0) {
             return {
               ...cat,
               feedTime: cat.feedTime - 1,
             };
-          }),
+          } else return { ...cat };
         });
-      }, 1000);
-  }
+      });
+    }, 1000);
 
-  componentDidMount() {
-    if (this.state.cats.length === 0) this.interval();
-    setTimeout(this.feedInterval, 5000);
-  }
+  useEffect(() => {
+    interval();
+    setTimeout(feedInterval, 5000);
 
-  componentWillUnmount(): void {
-    clearInterval(this.interval());
-    clearInterval(this.feedInterval());
-  }
+    return () => {
+      clearInterval(interval());
+      clearInterval(feedInterval());
+    };
+  }, []);
 
-  feedCat = (id: string) => {
-    this.setState({
-      cats: this.state.cats.map((cat) => {
+  const feedCat = (id: string) => {
+    setCats({
+      ...cats.map((cat) => {
         console.log(cat.id);
 
         if (cat.id === id) {
@@ -95,13 +90,9 @@ export default class CatsProvider extends React.Component<
     });
   };
 
-  render(): React.ReactNode {
-    const { cats } = this.state;
-    const { feedCat } = this;
-    return (
-      <CatsContext.Provider value={{ cats, feedCat }}>
-        {this.props.children}
-      </CatsContext.Provider>
-    );
-  }
+  return (
+    <CatsContext.Provider value={{ cats, feedCat }}>
+      {props.children}
+    </CatsContext.Provider>
+  );
 }
