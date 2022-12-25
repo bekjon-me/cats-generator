@@ -30,10 +30,6 @@ export const CatsContext = React.createContext<CatsContextType>(initialState);
 export default function CatsProvider(props: any) {
   const [cats, setCats] = React.useState<Cat[]>(initialState.cats);
 
-  console.log(cats);
-
-  console.log("render");
-
   const interval = () =>
     setInterval(() => {
       setCats((prevCats) => [
@@ -65,20 +61,44 @@ export default function CatsProvider(props: any) {
     }, 1000);
 
   useEffect(() => {
-    interval();
-    setTimeout(feedInterval, 5000);
+    const interval: NodeJS.Timer = setInterval(() => {
+      setCats((prevCats) => [
+        ...prevCats,
+        {
+          id: uuid(),
+          name: catRandom(),
+          color: colorRandom(),
+          age: 0,
+          hasCollar: hasCollar(),
+          image: catRandomImage(),
+          feedTime: 35,
+        },
+      ]);
+    }, 5000);
+
+    const feedInterval: NodeJS.Timer = setInterval(() => {
+      setCats((prevCats) => {
+        return prevCats.map((cat) => {
+          if (cat.feedTime > 0) {
+            return {
+              ...cat,
+              feedTime: cat.feedTime - 1,
+            };
+          } else return { ...cat };
+        });
+      });
+    }, 1000);
 
     return () => {
-      clearInterval(interval());
-      clearInterval(feedInterval());
+      // setCats([]);
+      clearInterval(interval);
+      clearInterval(feedInterval);
     };
   }, []);
 
   const feedCat = (id: string) => {
-    setCats({
-      ...cats.map((cat) => {
-        console.log(cat.id);
-
+    setCats((prevCats) => {
+      return prevCats.map((cat) => {
         if (cat.id === id) {
           return {
             ...cat,
@@ -86,7 +106,7 @@ export default function CatsProvider(props: any) {
             feedTime: 35,
           };
         } else return { ...cat };
-      }),
+      });
     });
   };
 
