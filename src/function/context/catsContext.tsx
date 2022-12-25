@@ -30,36 +30,6 @@ export const CatsContext = React.createContext<CatsContextType>(initialState);
 export default function CatsProvider(props: any) {
   const [cats, setCats] = React.useState<Cat[]>(initialState.cats);
 
-  const interval = () =>
-    setInterval(() => {
-      setCats((prevCats) => [
-        ...prevCats,
-        {
-          id: uuid(),
-          name: catRandom(),
-          color: colorRandom(),
-          age: 0,
-          hasCollar: hasCollar(),
-          image: catRandomImage(),
-          feedTime: 35,
-        },
-      ]);
-    }, 5000);
-
-  const feedInterval = () =>
-    setInterval(() => {
-      setCats((prevCats) => {
-        return prevCats.map((cat) => {
-          if (cat.feedTime > 0) {
-            return {
-              ...cat,
-              feedTime: cat.feedTime - 1,
-            };
-          } else return { ...cat };
-        });
-      });
-    }, 1000);
-
   useEffect(() => {
     const interval: NodeJS.Timer = setInterval(() => {
       setCats((prevCats) => [

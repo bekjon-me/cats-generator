@@ -1,5 +1,4 @@
 import React from "react";
-import { CatsContextType } from "../context/@types.cats";
 import { CatsContext } from "../context/catsContext";
 
 interface IProps {
